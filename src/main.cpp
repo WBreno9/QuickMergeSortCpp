@@ -25,10 +25,10 @@ int main(int argc, char** argv) {
   fs.close();
 
   char select = argv[1][0];
-  if (select == 's') {
+  if (select == 'm') {
     mergeSort(in);
-  } else if (select == 'i') {
-    // insertionSort(in);
+  } else if (select == 'q') {
+    quickSort(in);
   } else {
     std::cout << "\"" << select << "\" - is not a valid option\n";
     std::exit(EXIT_FAILURE);

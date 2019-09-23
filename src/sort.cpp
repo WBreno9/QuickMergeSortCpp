@@ -1,38 +1,56 @@
 #include "sort.h"
 
-void merge(std::vector<int64_t>& data, size_t p, size_t q, size_t r)
+void merge(std::vector<int64_t>& v, size_t p, size_t q, size_t r)
 {
-    std::vector<int64_t> array0(data.begin() + p, data.begin() + (q + 1));
-    std::vector<int64_t> array1(data.begin() + q, data.begin() + (r + 2));
+    std::vector<int64_t> v0(v.begin() + p, v.begin() + (q + 1));
+    std::vector<int64_t> v1(v.begin() + q, v.begin() + (r + 2));
 
-    array0[q - p] = INT64_MAX;
-    array1[r - q + 1] = INT64_MAX;
+    v0[q - p] = INT64_MAX;
+    v1[r - q + 1] = INT64_MAX;
 
-    size_t i = 0, j = 0, k = p;
+    uint64_t i = 0, j = 0, k = p;
 
-    while(!(array0[i] == INT64_MAX && array1[j] == INT64_MAX)) {
-        if (array0[i] < array1[j]) {
-            data[k] = array0[i++];
+    while(!(v0[i] == INT64_MAX && v1[j] == INT64_MAX)) {
+        if (v0[i] < v1[j]) {
+            v[k] = v0[i++];
         } else {
-            data[k] = array1[j++];
+            v[k] = v1[j++];
         }
         ++k;
     }
 }
 
-void _mergeSort(std::vector<int64_t>& data, size_t p, size_t r)
+void _mergeSort(std::vector<int64_t>& v, size_t p, size_t r)
 {
     size_t q;
 
     if (p < r) {
         q = (p+r)/2.0f;
-        _mergeSort(data, p  , q);
-        _mergeSort(data, q+1, r);
-        merge(data, p, q+1, r);
+        _mergeSort(v, p  , q);
+        _mergeSort(v, q+1, r);
+        merge(v, p, q+1, r);
     }
 }
 
-void mergeSort(std::vector<int64_t>& data)
-{
-    _mergeSort(data, 0, data.size()-1);
+void mergeSort(std::vector<int64_t>& v) { 
+  _mergeSort(v, 0, v.size() - 1); 
 }
+
+void _quickSort(int64_t* v, int sz) {
+  if (sz < 2) return;
+
+  uint64_t pivot = sz - 1, wall = 0, n = 0;
+
+  while (true) {
+    while (v[n] > v[pivot]) n++;
+    if (n >= pivot) {
+      std::swap(v[n], v[wall]);
+      break;
+    }
+    std::swap(v[n++], v[wall++]);
+  }
+  _quickSort(v, wall);
+  _quickSort(&v[wall + 1], sz - (wall + 1));
+}
+
+void quickSort(std::vector<int64_t>& v) { _quickSort(v.data(), v.size()); }
