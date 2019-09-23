@@ -4,8 +4,8 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <cstring>
 
-void selectionSort(std::vector<int64_t>& v);
-void insertionSort(std::vector<int64_t>& v);
+void mergeSort(std::vector<int64_t>& data);
 
 #endif // !SORT_H

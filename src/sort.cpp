@@ -1,23 +1,38 @@
 #include "sort.h"
 
-void selectionSort(std::vector<int64_t>& v) {
-  for (uint32_t i = 0; i < v.size() - 1; ++i) {
-    uint32_t min_id = i;
+void merge(std::vector<int64_t>& data, size_t p, size_t q, size_t r)
+{
+    std::vector<int64_t> array0(data.begin() + p, data.begin() + (q + 1));
+    std::vector<int64_t> array1(data.begin() + q, data.begin() + (r + 2));
 
-    for (uint32_t j = min_id + 1; j < v.size(); ++j)
-      if (v[min_id] > v[j]) min_id = j;
+    array0[q - p] = INT64_MAX;
+    array1[r - q + 1] = INT64_MAX;
 
-    if (min_id != i) std::swap(v[min_id], v[i]);
-  }
+    size_t i = 0, j = 0, k = p;
+
+    while(!(array0[i] == INT64_MAX && array1[j] == INT64_MAX)) {
+        if (array0[i] < array1[j]) {
+            data[k] = array0[i++];
+        } else {
+            data[k] = array1[j++];
+        }
+        ++k;
+    }
 }
 
-void insertionSort(std::vector<int64_t>& v) {
-  for (uint32_t i = 1; i < v.size(); ++i) {
-    uint32_t j = i;
+void _mergeSort(std::vector<int64_t>& data, size_t p, size_t r)
+{
+    size_t q;
 
-    while (j && v[j - 1] > v[j]) {
-      std::swap(v[j], v[j - 1]);
-      --j;
+    if (p < r) {
+        q = (p+r)/2.0f;
+        _mergeSort(data, p  , q);
+        _mergeSort(data, q+1, r);
+        merge(data, p, q+1, r);
     }
-  }
+}
+
+void mergeSort(std::vector<int64_t>& data)
+{
+    _mergeSort(data, 0, data.size()-1);
 }

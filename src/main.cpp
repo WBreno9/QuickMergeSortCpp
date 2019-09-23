@@ -5,7 +5,7 @@
 int main(int argc, char** argv) {
   if (argc != 3) {
     std::cout << "usage: bin/sort <option> <test_file_path>\n";
-    std::cout << "\t options: s (selection sort), i (insertion sort)\n";
+    std::cout << "\t options: m (merge sort), q (quick sort)\n";
     std::exit(EXIT_SUCCESS);
   }
 
@@ -26,9 +26,9 @@ int main(int argc, char** argv) {
 
   char select = argv[1][0];
   if (select == 's') {
-    selectionSort(in);
+    mergeSort(in);
   } else if (select == 'i') {
-    insertionSort(in);
+    // insertionSort(in);
   } else {
     std::cout << "\"" << select << "\" - is not a valid option\n";
     std::exit(EXIT_FAILURE);
